@@ -1,7 +1,8 @@
 from evolve import obj
 evolve = obj()
-evolve.set_memory('zzzzzzzzzzzzzzzzzzzzzzzzzz')
-evolve.set('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+
+evolve.set_memory('yyyyyyyyyyyyyyyyyyyyyyy')
+evolve.set('aaaa')
 def define_vars():
     """A simple declaration of the brainfuck primitives.. I chose the brainfuck primitives because it's a really simple instruction set, but is also turing complete"""
     def x(self):
@@ -52,10 +53,12 @@ define_vars()
 """ The main loop """
 for i in range(0,100000):
     evolve.execute()
-    print evolve.memory
-    evolve.test('yyyyyyyyyyyyyyyyyyyyyyyyyyy')
-    print str(evolve.prev) +',' +str(evolve.new)
+    #print evolve.memory
+
+    evolve.test('zzzzzzzzzzzzzzzzzzzzzzz')
+    print str(evolve.champ_score) + ',' + str(evolve.prev) +',' + str(evolve.new) 
     print evolve.instructions
+    # once every 1000 iterations, revert the instructions to the champion
     if i %1000 == 0 and i>10:
         evolve.instructions = evolve.champ_instructions
     """

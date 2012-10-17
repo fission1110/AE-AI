@@ -1,10 +1,10 @@
 from random import randrange
 from Levenshtein import ratio
-import sys
 
 class obj(object):
     """docstring for turing"""
 
+    prev = 0
     """ The container for all of the python function references """
     call_set = {}
     
@@ -38,13 +38,28 @@ class obj(object):
 
     def evolve(self, n):
         """ evolve n number of genes to something random """
-        #TODO: make it so that it has the possibility to increase or decrease the length of the execution stack.
         self.prev_instructions = self.instructions
-        for i in range(0,n):
-            #pick a random letter to change
-            letter_num = randrange(1,len(self.instructions)+1)
-            #assign it to one of the letters in the call set
-            self.instructions = self.instructions[0:letter_num-1] + self.call_set.keys()[randrange(0,len(self.call_set))] + self.instructions[letter_num:]
+        #Decide whether or not to add/delete n genes, or modify previous genes
+        coin = randrange(0,2)
+        #pick a gene to manipulate
+        gene = randrange(0,len(self.instructions)+1)
+        if coin == 0:
+            for i in range(0,n):
+                #assign it to one of the letters in the call set
+                self.instructions = self.instructions[0:gene-1] + self.call_set.keys()[randrange(0,len(self.call_set))] + self.instructions[gene:]
+        elif coin == 1:
+            #flip another coin to decide if you should add or subtract a char
+            coin2 = randrange(0,2)
+            if coin2 == 0 and len(self.instructions) > 1:
+                #delete the char
+                delchar_pos = randrange(0, len(self.instructions))
+                self.instructions = self.instructions[0:gene-1] + self.instructions[gene:]
+            elif coin2 == 1:
+                #add a new char
+                newchar = self.call_set.keys()[randrange(0,len(self.call_set))]
+                self.instructions = self.instructions[0:gene-1] + self.instructions[gene:]
+                
+
 
     def set(self, string):
         """ set the initial instructions, usually I set it to a string of 'a's """
@@ -66,16 +81,21 @@ class obj(object):
     
     def test(self, goal):
         """ Use fuzzy string comparison to test if it is better than it's parent """
-        #if it reached its goal, kill the script.. I may want to take that part out, and give it something for efficiency
+        # get the previous results, as well as these results
+        self.prev_instructions = self.instructions
+        #handicap it .01 for every letter in the code
+        handicap = len(self.instructions) * .005
+        self.new = ratio(self.memory, goal)- handicap
+        # score! it worked.
         if(self.memory == goal):
             print 'it worked!\r\n'
+            # give it a boost in terms of score
+            # The reason for doing this, is you never want a success to be beaten by a
+            # shorter algorithm that was unsuccessful. The handicap can mess things up.
+            self.new = self.new + 10
             print self.instructions
-            sys.exit()
-        # get the previous results, as well as these results
-        #TODO: make it save the previoius results to the object, so that you 
-        #can change the goal
-        self.prev = ratio(self.prev_memory, goal)
-        self.new = ratio(self.memory, goal)
+            #import sys
+            #sys.exit()
         #if this beats the champions score, set it as the champ
         if self.new > self.champ_score:
             self.champ_score = self.new
@@ -93,5 +113,6 @@ class obj(object):
         #set some variables and evolve it
         self.prev_memory = self.memory
         self.memory = self.orig_memory
+        self.prev = self.new
         self.evolve(1)
         return self.new
