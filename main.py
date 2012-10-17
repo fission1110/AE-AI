@@ -47,11 +47,15 @@ def define_vars():
             if self.instructions.rfind('[', 0, self.inst_ptr) != -1:
                 self.inst_ptr = self.instructions.rfind('[',0 , self.inst_ptr) + 1
     evolve.define(']', x)
+    def x(self):
+        """  """
+        self.output += self.memory[self.data_ptr]
+    evolve.define('.', x)
 
 define_vars()
 
 """ The main loop """
-for i in range(0,100000):
+for i in range(0,10000):
     evolve.execute()
     #print evolve.memory
 
@@ -68,5 +72,4 @@ for i in range(0,100000):
 print '---------------- Champion! ------------------'
 print evolve.champ_instructions
 print evolve.champ_score
-print evolve.champ_memory
-   
+print evolve.champ_output   

@@ -4,11 +4,13 @@ from Levenshtein import ratio
 class obj(object):
     """docstring for turing"""
 
+    output = ''
+    orig_output = ''
     prev = 0
     """ The container for all of the python function references """
     call_set = {}
     
-    """ The pointer that points to the current place in self.memory """
+    """ The pointer that points to the current place in self.output """
     data_ptr = 0
 
     """ The instruction pointer points to any place in self.instructions """
@@ -18,9 +20,9 @@ class obj(object):
     total_executions = 0
 
     """ These variable store things for the champion """
-    champ_score = 0
+    champ_score = -10
     champ_instructions = ''
-    champ_memory = ''
+    champ_output = ''
 
     def execute(self):
         """ This loops through the instruction set, and executes the brainfuck primitives"""
@@ -85,9 +87,9 @@ class obj(object):
         self.prev_instructions = self.instructions
         #handicap it .01 for every letter in the code
         handicap = len(self.instructions) * .005
-        self.new = ratio(self.memory, goal)- handicap
+        self.new = ratio(self.output, goal)- handicap
         # score! it worked.
-        if(self.memory == goal):
+        if(self.output == goal):
             print 'it worked!\r\n'
             # give it a boost in terms of score
             # The reason for doing this, is you never want a success to be beaten by a
@@ -100,7 +102,7 @@ class obj(object):
         if self.new > self.champ_score:
             self.champ_score = self.new
             self.champ_instructions = self.instructions
-            self.champ_memory = self.memory
+            self.champ_output = self.output
         # if the previous won, set it to the previous instructions
         if self.prev > self.new:
             self.instructions = self.prev_instructions
@@ -111,8 +113,8 @@ class obj(object):
             """they both suck"""
             self.instructions = self.instructions
         #set some variables and evolve it
-        self.prev_memory = self.memory
-        self.memory = self.orig_memory
+        self.prev_output = self.output
+        self.output = self.orig_output
         self.prev = self.new
         self.evolve(1)
         return self.new
