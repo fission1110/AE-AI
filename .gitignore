@@ -3,6 +3,8 @@
 
 #ignore various temporary things
 *~
+*.swo
+*.swp
 *.lock
 *.DS_Store
 *.swp
