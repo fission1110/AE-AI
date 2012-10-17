@@ -80,6 +80,7 @@ class obj(object):
         self.memory = string
         self.prev_memory = string
         self.orig_memory = string
+
     
     def test(self, goal):
         """ Use fuzzy string comparison to test if it is better than it's parent """
@@ -114,7 +115,8 @@ class obj(object):
             self.instructions = self.instructions
         #set some variables and evolve it
         self.prev_output = self.output
-        self.output = self.orig_output
+        self.memory = self.orig_memory
+        self.output = ''
         self.prev = self.new
         self.evolve(1)
         return self.new
