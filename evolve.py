@@ -42,25 +42,30 @@ class obj(object):
         """ evolve n number of genes to something random """
         self.prev_instructions = self.instructions
         #Decide whether or not to add/delete n genes, or modify previous genes
-        coin = randrange(0,2)
-        #pick a gene to manipulate
-        gene = randrange(0,len(self.instructions)+1)
-        if coin == 0:
-            for i in range(0,n):
+        for i in range(0,n):
+            coin = randrange(0,2)
+            #pick a gene to manipulate
+            gene = randrange(0,len(self.instructions)+1)
+            if coin == 0:
                 #assign it to one of the letters in the call set
                 self.instructions = self.instructions[0:gene-1] + self.call_set.keys()[randrange(0,len(self.call_set))] + self.instructions[gene:]
-        elif coin == 1:
-            #flip another coin to decide if you should add or subtract a char
-            coin2 = randrange(0,2)
-            if coin2 == 0 and len(self.instructions) > 1:
-                #delete the char
-                delchar_pos = randrange(0, len(self.instructions))
-                self.instructions = self.instructions[0:gene-1] + self.instructions[gene:]
-            elif coin2 == 1:
-                #add a new char
-                newchar = self.call_set.keys()[randrange(0,len(self.call_set))]
-                self.instructions = self.instructions[0:gene-1] + self.instructions[gene:]
-                
+            elif coin == 1:
+                #flip another coin to decide if you should add or subtract a char
+                coin2 = randrange(0,2)
+                if coin2 == 0 and len(self.instructions) > 1:
+                    #delete the char
+                    self.instructions = self.instructions[0:gene-1] + self.instructions[gene:]
+                elif coin2 == 1:
+                    #add a new char
+                    coin3 = randrange(0,len(self.instructions)+1) #begining, end, middle
+                    newchar = self.call_set.keys()[randrange(0,len(self.call_set))]
+                    if coin3 == 0:
+                        self.instructions = newchar + self.instructions
+                    if coin3 == 1:
+                        self.instructions = self.instructions + newchar 
+                    if coin3>1:
+                        self.instructions = self.instructions[0:gene-1] + self.instructions[gene:]
+
 
 
     def set(self, string):
@@ -81,14 +86,13 @@ class obj(object):
         self.prev_memory = string
         self.orig_memory = string
 
-    
     def test(self, goal):
         """ Use fuzzy string comparison to test if it is better than it's parent """
         # get the previous results, as well as these results
         self.prev_instructions = self.instructions
-        #handicap it .01 for every letter in the code
-        handicap = len(self.instructions) * .005
-        self.new = ratio(self.output, goal)- handicap
+        #handicap it .000001 for every letter in the code
+        handicap = len(self.instructions) * .00000001 
+        self.new = (ratio(self.output, goal)**2)- handicap #square the score to put a big emphasis on getting things right
         # score! it worked.
         if(self.output == goal):
             print 'it worked!\r\n'
@@ -118,5 +122,7 @@ class obj(object):
         self.memory = self.orig_memory
         self.output = ''
         self.prev = self.new
+        #set the evolve rate randomly
+        evolve_number = randrange(1,3)
         self.evolve(1)
         return self.new
