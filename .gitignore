@@ -1,0 +1,9 @@
+#Ignore the compiled python code
+*.pyc
+
+#ignore various temporary things
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
