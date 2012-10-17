@@ -46,10 +46,6 @@ def define_vars():
             if self.instructions.rfind('[', 0, self.inst_ptr) != -1:
                 self.inst_ptr = self.instructions.rfind('[',0 , self.inst_ptr) + 1
     evolve.define(']', x)
-    def x(self):
-        """ Do nothing, these are only for the [ command """
-        pass
-    evolve.define('a', x)
 
 define_vars()
 
