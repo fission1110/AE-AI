@@ -92,7 +92,7 @@ class obj(object):
         self.prev_instructions = self.instructions
         #handicap it .000001 for every letter in the code
         handicap = len(self.instructions) * .00000001 
-        self.new = (ratio(self.output, goal)**2)- handicap #square the score to put a big emphasis on getting things right
+        self.new = (ratio(self.output, goal))- handicap #square the score to put a big emphasis on getting things right
         # score! it worked.
         if(self.output == goal):
             # give it a boost in terms of score

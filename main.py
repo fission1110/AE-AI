@@ -33,9 +33,9 @@ def mainloop(input, expected_output, iterations = 10000, starting_code = '', std
     return ai
 
 def input():
-    return 'abcdefghijklmnopqrstuvwxyz'
-def expected_output():
     return 'zyxwvutsrqponmlkjihgfedcba'
+def expected_output():
+    return 'abcdefghijklmnopqrstuvwxyz'
 mainloop(input, expected_output, 10000000, '', True) 
 
 
