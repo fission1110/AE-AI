@@ -95,12 +95,10 @@ class obj(object):
         self.new = (ratio(self.output, goal)**2)- handicap #square the score to put a big emphasis on getting things right
         # score! it worked.
         if(self.output == goal):
-            print 'it worked!\r\n'
             # give it a boost in terms of score
             # The reason for doing this, is you never want a success to be beaten by a
             # shorter algorithm that was unsuccessful. The handicap can mess things up.
             self.new = self.new + 10
-            print self.instructions
             #import sys
             #sys.exit()
         #if this beats the champions score, set it as the champ
@@ -122,7 +120,5 @@ class obj(object):
         self.memory = self.orig_memory
         self.output = ''
         self.prev = self.new
-        #set the evolve rate randomly
-        evolve_number = randrange(1,3)
         self.evolve(1)
         return self.new
