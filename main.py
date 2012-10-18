@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from evolve.evolve import obj
 from random import randrange
 from evolve.callbacks import define
