@@ -4,6 +4,8 @@ from Levenshtein import ratio
 class obj(object):
     """docstring for turing"""
 
+    stack = []
+    stack_len = 100
     output = ''
     orig_output = ''
     prev = 0
@@ -31,7 +33,7 @@ class obj(object):
         self.inst_ptr = 0
         self.data_ptr = 0
         # while the inst_ptr is withing range, and it hasn't gone through more than 1000 iterations.
-        while self.inst_ptr < len(self.instructions) and self.total_executions < 1000:            #execute the instruction at the inst_ptr
+        while self.inst_ptr < len(self.instructions) and self.total_executions < 2000:            #execute the instruction at the inst_ptr
             if self.call_set.has_key(self.instructions[self.inst_ptr]):
                 self.call_set[self.instructions[self.inst_ptr]](self)
             #incriment the inst_ptr and the total exectuions counter
@@ -90,17 +92,23 @@ class obj(object):
         """ Use fuzzy string comparison to test if it is better than it's parent """
         # get the previous results, as well as these results
         self.prev_instructions = self.instructions
+        base_score = (ratio(self.output,goal))
+        #TODO: I need to make a way for the champ to get re-executed so that I can test its score on an evolving string
         #handicap it .000001 for every letter in the code
-        handicap = len(self.instructions) * .00000001 
-        self.new = (ratio(self.output, goal))- handicap #square the score to put a big emphasis on getting things right
+        if base_score > 1 or len(self.instructions) > 100:
+            handicap = len(self.instructions) * .0001 
+        else:
+            handicap = 0
+        self.new = ((base_score))- handicap #square the score to put a big emphasis on getting things right
         # score! it worked.
         if(self.output == goal):
             # give it a boost in terms of score
             # The reason for doing this, is you never want a success to be beaten by a
             # shorter algorithm that was unsuccessful. The handicap can mess things up.
-            self.new = self.new + 10
+            #self.new = self.new + 1
             #import sys
             #sys.exit()
+            pass
         #if this beats the champions score, set it as the champ
         if self.new > self.champ_score:
             self.champ_score = self.new
@@ -122,3 +130,5 @@ class obj(object):
         self.prev = self.new
         self.evolve(1)
         return self.new
+    
+
