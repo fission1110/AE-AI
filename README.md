@@ -1,22 +1,47 @@
-A turing complete evolutionary AI
+Ae-Ai - Adaptable Evolutionary Artificial Intellgience
 ==========================
 
-This is an evolutionary AI that writes code.
-I have a brianfuck program contained in a string, it manipulates a memory buffer that is used as output. If it get's it right, it will spit out the brainfuck code, and all will be well with the world.
-This works through the process of random mutaion, with non-random selection.
+Ae-Ai (Pronounced Aye Eye) is a turing complete artificial intelligence program.
 
-Currently it kind of sucks, and here's how I plan on making it better..
+Basically it's code, that randomly creates new code, and tests the output. Evolving to accomplish almost any task.
 
-Make it so that there is multiple children for each object. Right now, the competion is only from parent->child. And to simulate multiple children, it remembers the champion, and switches back to that champion every 1000 iterations. With a pool of multiple children, you could just kill off the weekest, and give them a set ammount of resources. This requires that I have a methodology for comparing different objects, rather than just comparing children to parents.
+Here's how it works.
+=========
 
-Turn this into a library that you can feed in a dictionary of 'input':'expected output', and train it to do basically any task.
+It has a list of simple primative instructions that are contained in a string. The evolutionary object loops through this string and executes the instructions.
+There is a stack, an output buffer, and an exectuion stack. 
+After the instructions are executed, the evolutionary object then checks itself for fitness, compares itself to its parent, and if it is more fit(which is determined by the levenshtein fuzzy string comparison) then it is then set as the new default instructions, which evolve. If it is beat by its parent, it then dies, and everything is reset to that parent.
+It also has a 'Champion', which is the most fit algorithm so far. Every once in a while, it is reset to the champion, simulating multiple competing algorithms.
 
-Make it so that the length of the program is not set, and that the longer they make the program, the lower the score they get.. Make it pull toward efficiency.
 
-Create a way to save the program state to a file, so that you can save your results or execute this on a cluster of computers all with different environment variables.
+Here are the plans for the future!
+=========
 
-Add more commands. Brain fuck may be turing complete but it isn't exactly effecient. 
+>Callback based inputs and expected outputs for dynamic challenges!
+Right now, it can't handle this. There are a few changes in the testing algorithm that need to be made. Making the champions settings get tested everytime.
 
->>>REQUIREMENTS
+>Multiple objects
+Many different competing algorithms.
+
+>Mating
+Objects should be able to mate with each other. I need to find a sufficiant string merging algorithm(or write one) that will prove to be advantageous.
+
+>Speciation
+Once 2 instruction sets become too different, don't allow them to mate. Simulating speciation which will allow complete independant angorithms in the same gene pool.
+
+>Multi-threading
+Multiple threads, each running an algorithm asyncronously
+
+>Network support
+Multiple computers can be running independatly via a hive model. The main server would then check for fitness of each bee in the hive, and decided champions.
+
+>Easily adjustable environment variables
+Make it so that the world can be adjusted easily, maybe through a simple configuration file.
+
+
+
+
+>REQUIREMENTS
+=========
 This requires the Levenshtein library for fuzzy string comparison. You can get it through your favorite packaging manager, or get the source at..
 http://code.google.com/p/pylevenshtein/
