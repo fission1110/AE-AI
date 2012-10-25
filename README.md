@@ -1,4 +1,4 @@
-Ae-Ai - Adaptable Evolutionary Artificial Intellgience
+Ae-Ai - Adaptable Evolutionary Artificial Intelligence
 ==========================
 
 Ae-Ai (Pronounced Aye Eye) is a turing complete artificial intelligence program.
@@ -17,25 +17,25 @@ It also has a 'Champion', which is the most fit algorithm so far. Every once in 
 Here are the plans for the future!
 =========
 
->Callback based inputs and expected outputs for dynamic challenges!
+>Callback based inputs and expected outputs for dynamic challenges!:
 Right now, it can't handle this. There are a few changes in the testing algorithm that need to be made. Making the champions settings get tested everytime.
 
->Multiple objects
+>Multiple objects:
 Many different competing algorithms.
 
->Mating
+>Mating:
 Objects should be able to mate with each other. I need to find a sufficiant string merging algorithm(or write one) that will prove to be advantageous.
 
->Speciation
+>Speciation:
 Once 2 instruction sets become too different, don't allow them to mate. Simulating speciation which will allow complete independant angorithms in the same gene pool.
 
->Multi-threading
+>Multi-threading:
 Multiple threads, each running an algorithm asyncronously
 
->Network support
+>Network support:
 Multiple computers can be running independatly via a hive model. The main server would then check for fitness of each bee in the hive, and decided champions.
 
->Easily adjustable environment variables
+>Easily adjustable environment variables:
 Make it so that the world can be adjusted easily, maybe through a simple configuration file.
 
 
