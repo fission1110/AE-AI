@@ -43,10 +43,9 @@ def mainloop(input, expected_output, iterations = 10000, starting_code = '', std
     return ai
 
 def input(object):
-    object.input_buffer = chr(randrange(97,123)) 
-    return object.input_buffer.encode('rot13')
+    return "aaaaaaaaaaaaaaaaaaaaaa"
 def expected_output(object):
-    return object.input_buffer
+    return "ZZZZZZZZZZZZZZZZZZZZZZ"
 
 mainloop(input, expected_output, 10000000, '[.]', True) 
 

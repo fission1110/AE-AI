@@ -91,7 +91,7 @@ class obj(object):
     def test(self, goal):
         """ Use fuzzy string comparison to test if it is better than it's parent """
         # get the previous results, as well as these results
-        self.prev_instructions = self.instructions
+        #self.prev_instructions = self.instructions
         base_score = (ratio(self.output,goal))
         #TODO: I need to make a way for the champ to get re-executed so that I can test its score on an evolving string
         #handicap it .000001 for every letter in the code
